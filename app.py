@@ -1,4 +1,5 @@
 import io
+import os
 import numpy as np
 import base64
 from flask import Flask, request, jsonify
@@ -6,12 +7,15 @@ from tensorflow.keras.models import load_model
 from PIL import Image
 from flask_cors import CORS  # Correct import for CORS
 import json
+from dotenv import load_dotenv
 
 # Initialize Flask app
 app = Flask(__name__)
+# Access environment variables
+front_end_url = os.getenv("FRONT_END_URL")
 
 # Enable CORS for only certain origins (Make sure to use proper Python syntax)
-CORS(app, origins=["http://localhost:3000"])  # Allow only localhost:3000 for frontend requests
+CORS(app, origins=[front_end_url])  # Allow only localhost:3000 for frontend requests
 
 # Load the model (ensure your .h5 model is in the same directory or provide the path)
 model = load_model('plant_disease_prediction_model.h5')
